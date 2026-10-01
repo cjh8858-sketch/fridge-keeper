@@ -35,3 +35,30 @@ npm run check
 ```
 
 RLS 테스트(`npm run db:test`)는 Docker가 있는 환경(Codespaces/CI)에서만.
+
+## 배포 주소
+
+- 앱: https://cjh8858-sketch.github.io/fridge-keeper/
+- 저장소: https://github.com/cjh8858-sketch/fridge-keeper
+
+## 문제 해결 (실제로 겪은 것)
+
+| 증상                                                                                                         | 원인                                             | 해결                                                                                            |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| push 거부: `refusing to allow a Personal Access Token to create or update workflow … without workflow scope` | 저장된 토큰에 workflow 권한 없음                 | 토큰에 Workflows(Read and write) 추가, 또는 저장된 github.com 자격 증명 삭제 후 브라우저 로그인 |
+| `git remote add` → `remote origin already exists` (`<id>/<repo>`)                                            | 문서 예시 명령을 자리표시자 그대로 실행          | `git remote set-url origin <실제 주소>`                                                         |
+| Deploy 성공인데 "Deploy to GitHub Pages" job이 skipped                                                       | migrate job이 skipped면 기본 `success()`가 false | deploy job에 `if: ${{ !failure() && !cancelled() }}` (반영됨)                                   |
+| `Failed to create deployment (status: 404) … Ensure GitHub Pages has been enabled`                           | Pages Source 미설정                              | Settings → Pages → Source: **GitHub Actions** (Jekyll/Static HTML "Configure"는 누르지 않는다)  |
+| 배포 앱이 "Supabase 설정이 필요합니다"                                                                       | Variables 미등록                                 | Settings → Secrets and variables → Actions → **Variables** 탭                                   |
+
+## DB 자동 마이그레이션 켜기 (나중에)
+
+초기 마이그레이션은 SQL Editor로 수동 적용했으므로, 켜기 전에 한 번 "이미 적용됨"으로 표시해야 한다.
+
+```bash
+npx supabase login
+npx supabase link --project-ref xkhurzxcapwnarvcmtiq
+npx supabase migration repair --status applied 20261002000000
+```
+
+그다음 Secrets(`SUPABASE_ACCESS_TOKEN`, `SUPABASE_DB_PASSWORD`)와 Variable `SUPABASE_PROJECT_REF`를 등록하면 main push 때 남은 마이그레이션(`20261002010000` 등)이 자동 적용된다.
