@@ -70,7 +70,7 @@ export function nowTimestamp(now = new Date()) {
 }
 
 /**
- * 시각 표시용 "10월 2일 14:05" (가족 시간대 기준)
+ * 시각 표시용 "10월 2일 14:05" (기기 시간대 기준)
  * @param {string} timestamp ISO timestamp
  * @param {string} timezone IANA 시간대
  * @returns {string}
@@ -84,4 +84,12 @@ export function formatDateTime(timestamp, timezone) {
     minute: '2-digit',
     hour12: false,
   }).format(new Date(timestamp));
+}
+
+/**
+ * 이 기기의 IANA 시간대 (예: 'Asia/Seoul'). "오늘" 판정 기준 — 1인용이라 기기 설정을 따른다.
+ * @returns {string}
+ */
+export function deviceTimezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Seoul';
 }

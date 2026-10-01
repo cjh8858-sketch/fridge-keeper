@@ -6,7 +6,7 @@
 2. `data/auth-repo.sendMagicLink(email, location.origin + base)` 호출
 3. 안내 문구: "메일함에서 링크를 눌러주세요" (스팸함 안내 포함)
 4. 링크 클릭 → 앱으로 돌아오면 supabase-js가 세션을 자동 저장(`detectSessionInUrl`)
-5. 세션 있음 → 가족 없으면 [family-sharing](family-sharing.md) 화면, 있으면 목록
+5. 세션 있음 → 바로 내 냉장고 목록 ([items](items.md))
 
 ## 수용 기준
 

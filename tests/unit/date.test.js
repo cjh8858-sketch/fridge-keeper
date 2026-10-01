@@ -14,7 +14,7 @@ describe('isIsoDate', () => {
 });
 
 describe('today', () => {
-  it('uses the household timezone, not the device clock', () => {
+  it('uses the given timezone, not UTC', () => {
     // 2026-10-01 20:00 UTC = 2026-10-02 05:00 KST
     const now = new Date('2026-10-01T20:00:00Z');
     expect(today('Asia/Seoul', now)).toBe('2026-10-02');
@@ -38,10 +38,17 @@ describe('daysBetween / addDays', () => {
 });
 
 describe('formatDateTime', () => {
-  it('formats in the household timezone', async () => {
+  it('formats in the given timezone', async () => {
     const { formatDateTime } = await import('../../src/domain/date.js');
     const text = formatDateTime('2026-10-01T20:30:00Z', 'Asia/Seoul');
     expect(text).toContain('10월 2일');
     expect(text).toContain('05:30');
+  });
+});
+
+describe('deviceTimezone', () => {
+  it('returns an IANA timezone name', async () => {
+    const { deviceTimezone } = await import('../../src/domain/date.js');
+    expect(deviceTimezone()).toMatch(/^[A-Za-z_]+(\/[A-Za-z_+-]+)*$|^UTC$/);
   });
 });

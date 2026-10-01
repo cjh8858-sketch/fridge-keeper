@@ -2,10 +2,10 @@
 
 두 층으로 나뉜다. **섞지 않는 것**이 핵심 규칙이다.
 
-| 층     | 무엇을                     | 어디서                                                                   | 왜                                     |
-| ------ | -------------------------- | ------------------------------------------------------------------------ | -------------------------------------- |
-| 앱 셸  | HTML·JS·CSS·아이콘         | Service Worker [`public/sw.js`](../../public/sw.js)                      | 오프라인에서도 앱이 열리도록           |
-| 데이터 | 마지막 음식 목록·가족 목록 | IndexedDB [`src/data/offline-cache.js`](../../src/data/offline-cache.js) | 사용자·가족별로 분리, 로그아웃 시 삭제 |
+| 층     | 무엇을             | 어디서                                                                   | 왜                                |
+| ------ | ------------------ | ------------------------------------------------------------------------ | --------------------------------- |
+| 앱 셸  | HTML·JS·CSS·아이콘 | Service Worker [`public/sw.js`](../../public/sw.js)                      | 오프라인에서도 앱이 열리도록      |
+| 데이터 | 마지막 음식 목록   | IndexedDB [`src/data/offline-cache.js`](../../src/data/offline-cache.js) | 사용자별로 분리, 로그아웃 시 삭제 |
 
 - **Service Worker는 Supabase(다른 출처) 요청을 절대 캐시하지 않는다.** API 응답을 SW에 캐시하면 사용자 구분 없이 남아 다른 계정에 보일 수 있다.
 - 오프라인 데이터는 **읽기 전용**. 편집은 비활성화(TD-1: 오프라인 편집).
@@ -24,8 +24,8 @@
 
 ## 오프라인 데이터 흐름
 
-1. `services/session.resolveAppState` — 가족 목록: 네트워크 실패 시 `readHouseholds(userId)`
-2. `services/items.loadFridge(household, userId)` — 음식 목록: 성공 시 `saveSnapshot`, 실패 시 `readSnapshot` → `{ offline: true, cachedAt }`
+1. `services/session.resolveAppState` — 세션은 기기에 저장돼 있어 오프라인에서도 바로 결정된다
+2. `services/items.loadFridge(userId)` — 음식 목록: 성공 시 `saveSnapshot`, 실패 시 `readSnapshot` → `{ offline: true, cachedAt }`
 3. `ui/views/fridge.js` — `navigator.onLine === false` 또는 `offline` 이면 읽기 전용:
    - 상태 표시 `오프라인 — 읽기 전용 (10월 2일 14:05 기준)`, 추가/수정 패널 대신 안내, 카드의 먹음·수정 버튼 비활성
    - `online` 이벤트 → 다시 불러오기 → 편집 가능 복귀

@@ -7,33 +7,17 @@
 /** @typedef {'expired' | 'today' | 'soon' | 'fresh'} ExpiryStatus */
 
 /**
- * @typedef {object} Item
+ * @typedef {object} Item 내 음식 1개 (RLS로 본인 것만 조회된다)
  * @property {string} id
- * @property {string} household_id
+ * @property {string} user_id
  * @property {string} name
  * @property {string | null} category
  * @property {StorageLocation} location
  * @property {number} quantity
  * @property {IsoDate} expiry_date
  * @property {string | null} memo
- * @property {string | null} created_by
  * @property {string | null} consumed_at
  * @property {string} updated_at
- */
-
-/**
- * @typedef {object} Household
- * @property {string} id
- * @property {string} name
- * @property {string} timezone IANA 시간대 (예: 'Asia/Seoul')
- */
-
-/**
- * @typedef {object} Member
- * @property {string} user_id
- * @property {string} email
- * @property {'owner' | 'member'} role
- * @property {string} joined_at
  */
 
 export {};

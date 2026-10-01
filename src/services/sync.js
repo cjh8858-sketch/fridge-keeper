@@ -1,5 +1,5 @@
-// 실시간 동기화: 같은 가족의 변경을 받아 목록을 다시 불러오게 하고, 연결 상태를 알려준다.
-// 스펙: docs/product-specs/family-sharing.md (3초 이내 반영)
+// 실시간 동기화: 다른 기기에서 바꾼 내 음식을 받아 목록을 다시 불러오게 하고, 연결 상태를 알려준다.
+// 스펙: docs/product-specs/items.md (다른 기기에 3초 이내 반영)
 import { subscribeItems } from '../data/items-repo.js';
 
 /** @typedef {'connecting' | 'live' | 'reconnecting' | 'offline'} SyncStatus */
@@ -31,11 +31,11 @@ export function toSyncStatus(channelStatus) {
 }
 
 /**
- * @param {string} householdId
+ * @param {string} userId
  * @param {{ onChange: () => void, onStatus: (status: SyncStatus) => void }} handlers
  * @returns {() => void} 정리 함수 (화면을 떠날 때 반드시 호출)
  */
-export function watchItems(householdId, { onChange, onStatus }) {
+export function watchItems(userId, { onChange, onStatus }) {
   /** @type {ReturnType<typeof setTimeout> | undefined} */
   let timer;
   // 정리 후 늦게 도착하는 콜백(채널 CLOSED 등)은 무시한다 — 이미 사라진 화면을 건드리지 않도록
@@ -46,7 +46,7 @@ export function watchItems(householdId, { onChange, onStatus }) {
     timer = setTimeout(onChange, RELOAD_DEBOUNCE_MS);
   };
   onStatus('connecting');
-  const unsubscribe = subscribeItems(householdId, schedule, (s) => {
+  const unsubscribe = subscribeItems(userId, schedule, (s) => {
     if (!stopped) onStatus(toSyncStatus(s));
   });
   return () => {

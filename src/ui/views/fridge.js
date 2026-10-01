@@ -22,12 +22,11 @@ const SUMMARY = /** @type {const} */ ([
 
 /**
  * @param {{
- *   household: import('../../types/index.js').Household,
  *   me: import('../../services/session.js').Me,
  * }} props
  * @returns {{ el: HTMLElement, openAdd: () => void, reload: () => Promise<void>, dispose: () => void }}
  */
-export function FridgeView({ household, me }) {
+export function FridgeView({ me }) {
   /** @type {import('../../types/index.js').StorageLocation | 'all'} */
   let filter = 'all';
   /** @type {Awaited<ReturnType<typeof loadFridge>> | null} */
@@ -111,7 +110,7 @@ export function FridgeView({ household, me }) {
 
   async function reload() {
     try {
-      data = await loadFridge(household, me.userId);
+      data = await loadFridge(me.userId);
       renderList();
       applyMode();
     } catch {
@@ -150,7 +149,7 @@ export function FridgeView({ household, me }) {
         item,
         onCancel: close,
         onSave: async (input) => {
-          const result = await saveItem(household.id, input, item?.id);
+          const result = await saveItem(input, item?.id);
           if (result.ok) {
             showToast(item ? '저장했어요.' : `'${input.name.trim()}' 추가했어요.`);
             close();
@@ -207,7 +206,7 @@ export function FridgeView({ household, me }) {
    * @type {import('../../services/sync.js').SyncStatus}
    */
   let channelStatus = 'connecting';
-  const stopWatching = watchItems(household.id, {
+  const stopWatching = watchItems(me.userId, {
     onChange: () => reload(),
     onStatus: (status) => {
       channelStatus = status;
@@ -237,7 +236,7 @@ export function FridgeView({ household, me }) {
 
   const el = h('div', { class: 'fridge' }, [
     h('section', { class: 'fridge-main stack', 'aria-labelledby': 'fridge-title' }, [
-      h('div', {}, [h('h2', { id: 'fridge-title' }, [household.name]), summary, sync]),
+      h('div', {}, [h('h2', { id: 'fridge-title' }, ['내 냉장고']), summary, sync]),
       chips,
       list,
     ]),

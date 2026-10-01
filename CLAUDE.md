@@ -1,6 +1,6 @@
 # 냉장고 지킴이 — CLAUDE.md (지도)
 
-가족이 함께 쓰는 **냉장고 유통기한 알림 웹앱**. 휴대폰·PC에서 같은 목록을 실시간으로 공유한다.
+나 혼자 쓰는 **냉장고 유통기한 알림 웹앱**. 같은 계정으로 휴대폰·PC에서 같은 목록을 실시간으로 본다.
 이 파일은 **목차**다. 상세는 링크된 문서를 필요할 때 읽는다. (≤200줄 유지 — I10)
 
 ## 작업 시작 전에
@@ -31,19 +31,19 @@ npm run db:test    # RLS pgTAP (Docker 필요 — CI에서 실행)
 
 ## 지도 (docs/)
 
-| 알고 싶은 것                               | 문서                                                                                                    |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| 원칙·**불변식 전체 목록**·고치는 법        | [docs/core-beliefs.md](docs/core-beliefs.md)                                                            |
-| 계층 구조·데이터 흐름·환경                 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                                                            |
-| 테이블·RLS 권한·RPC                        | [docs/data-model.md](docs/data-model.md)                                                                |
-| 제품 스펙 (로그인·가족·음식·유통기한·알림) | [docs/product-specs/](docs/product-specs/README.md)                                                     |
-| 디자인 시스템 (토큰·컴포넌트·접근성)       | [docs/design-system/](docs/design-system/README.md)                                                     |
-| 실행 계획·기술부채                         | [docs/exec-plans/](docs/exec-plans/README.md)                                                           |
-| 품질 등급 (다음 작업 후보)                 | [docs/QUALITY_SCORE.md](docs/QUALITY_SCORE.md)                                                          |
-| 키 관리·권한·XSS                           | [docs/SECURITY.md](docs/SECURITY.md)                                                                    |
-| Supabase/GitHub 설정 (사람이 하는 일)      | [supabase-setup](docs/references/supabase-setup.md) · [github-deploy](docs/references/github-deploy.md) |
-| RLS 작성 패턴                              | [docs/references/supabase-rls.md](docs/references/supabase-rls.md)                                      |
-| PWA·오프라인(SW·IndexedDB)                 | [docs/references/pwa.md](docs/references/pwa.md)                                                        |
+| 알고 싶은 것                          | 문서                                                                                                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 원칙·**불변식 전체 목록**·고치는 법   | [docs/core-beliefs.md](docs/core-beliefs.md)                                                            |
+| 계층 구조·데이터 흐름·환경            | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                                                            |
+| 테이블·RLS 권한·RPC                   | [docs/data-model.md](docs/data-model.md)                                                                |
+| 제품 스펙 (로그인·음식·유통기한·알림) | [docs/product-specs/](docs/product-specs/README.md)                                                     |
+| 디자인 시스템 (토큰·컴포넌트·접근성)  | [docs/design-system/](docs/design-system/README.md)                                                     |
+| 실행 계획·기술부채                    | [docs/exec-plans/](docs/exec-plans/README.md)                                                           |
+| 품질 등급 (다음 작업 후보)            | [docs/QUALITY_SCORE.md](docs/QUALITY_SCORE.md)                                                          |
+| 키 관리·권한·XSS                      | [docs/SECURITY.md](docs/SECURITY.md)                                                                    |
+| Supabase/GitHub 설정 (사람이 하는 일) | [supabase-setup](docs/references/supabase-setup.md) · [github-deploy](docs/references/github-deploy.md) |
+| RLS 작성 패턴                         | [docs/references/supabase-rls.md](docs/references/supabase-rls.md)                                      |
+| PWA·오프라인(SW·IndexedDB)            | [docs/references/pwa.md](docs/references/pwa.md)                                                        |
 
 ## 코드 지도 (src/)
 
@@ -51,16 +51,16 @@ npm run db:test    # RLS pgTAP (Docker 필요 — CI에서 실행)
 types → domain → data → services → ui      (오른쪽은 왼쪽만 import — I1)
 ```
 
-| 경로                           | 내용                                                                            |
-| ------------------------------ | ------------------------------------------------------------------------------- |
-| `src/types/`                   | JSDoc typedef (Item, Household, ExpiryStatus)                                   |
-| `src/domain/`                  | 순수 함수 — `date.js`(날짜 유일 창구), `expiry.js`(상태 판정·정렬)              |
-| `src/data/`                    | Supabase repo — `supabase-client`, `auth-repo`, `households-repo`, `items-repo` |
-| `src/services/`                | 유스케이스 — `session.js`(앱 상태 결정)                                         |
-| `src/ui/`                      | 화면 — `main.js`(진입점), `dom.js`(`h()` 안전 DOM 생성)                         |
-| `src/styles/`                  | `tokens.css`(값의 유일한 원본) → `base.css` → `components.css`                  |
-| `supabase/migrations/`         | 스키마 원본 (커밋 후 수정 금지)                                                 |
-| `scripts/check-invariants.mjs` | 린터로 못 잡는 불변식 검사                                                      |
+| 경로                           | 내용                                                                                      |
+| ------------------------------ | ----------------------------------------------------------------------------------------- |
+| `src/types/`                   | JSDoc typedef (Item, ExpiryStatus)                                                        |
+| `src/domain/`                  | 순수 함수 — `date.js`(날짜 유일 창구), `expiry.js`(상태 판정·정렬)                        |
+| `src/data/`                    | Supabase repo — `supabase-client`, `auth-repo`, `items-repo`, `offline-cache`             |
+| `src/services/`                | 유스케이스 — `session`(앱 상태), `auth`, `items`(목록·저장·오프라인 폴백), `sync`(실시간) |
+| `src/ui/`                      | 화면 — `main.js`(진입점), `dom.js`(`h()` 안전 DOM 생성)                                   |
+| `src/styles/`                  | `tokens.css`(값의 유일한 원본) → `base.css` → `components.css`                            |
+| `supabase/migrations/`         | 스키마 원본 (커밋 후 수정 금지)                                                           |
+| `scripts/check-invariants.mjs` | 린터로 못 잡는 불변식 검사                                                                |
 
 ## 불변식 (기계가 강제 — 위반 시 메시지의 → 지시를 따른다)
 
@@ -84,7 +84,7 @@ types → domain → data → services → ui      (오른쪽은 왼쪽만 impor
 | `/plan-feature`  | 새 기능·다단계 작업 시작 시 계획 작성         |
 | `/db-migration`  | 테이블·정책·RPC 변경 (RLS·테스트·문서까지)    |
 | `/build-ui`      | 화면·컴포넌트 구현 (디자인 시스템 체크리스트) |
-| `/verify-sync`   | 브라우저로 실제 동작·가족 간 동기화/격리 확인 |
+| `/verify-sync`   | 브라우저로 실제 동작·기기 간 동기화 확인      |
 | `/doc-gardening` | 문서·코드 불일치, 기술부채, 품질 점수 정리    |
 | `/add-invariant` | 반복되는 지적을 린트/검사/hook으로 승격       |
 

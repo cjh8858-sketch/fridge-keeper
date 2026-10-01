@@ -8,7 +8,6 @@ import { resolveAppState } from '../services/session.js';
 import { h, mount } from './dom.js';
 import { registerServiceWorker } from './pwa.js';
 import { HomeView } from './views/home.js';
-import { HouseholdSetupView } from './views/household-setup.js';
 import { LoginView } from './views/login.js';
 
 const APP_NAME = '냉장고 지킴이';
@@ -20,10 +19,9 @@ function notice(title, body) {
 
 /**
  * @param {import('../services/session.js').AppState} state
- * @param {() => void} refresh 앱 상태가 바뀌었을 때 다시 읽기
  * @returns {{ el: HTMLElement, dispose?: () => void }}
  */
-function renderState(state, refresh) {
+function renderState(state) {
   switch (state.kind) {
     case 'unconfigured':
       return {
@@ -34,10 +32,8 @@ function renderState(state, refresh) {
       };
     case 'signed-out':
       return { el: LoginView() };
-    case 'no-household':
-      return { el: HouseholdSetupView({ onDone: refresh }) };
     case 'ready':
-      return HomeView({ household: state.household, me: state.me, onChange: refresh });
+      return HomeView({ me: state.me });
   }
 }
 
@@ -46,7 +42,7 @@ function renderState(state, refresh) {
  * @param {import('../services/session.js').AppState} state
  */
 function renderAccount(state) {
-  if (state.kind !== 'no-household' && state.kind !== 'ready') return null;
+  if (state.kind !== 'ready') return null;
   const button = h('button', { class: 'btn btn-quiet', type: 'button' }, ['로그아웃']);
   button.addEventListener('click', async () => {
     button.disabled = true;
@@ -82,7 +78,7 @@ function start() {
       if (id !== renderId) return;
       account.replaceChildren(...[renderAccount(state)].filter((n) => n !== null));
       cleanup();
-      const next = renderState(state, refresh);
+      const next = renderState(state);
       cleanup = next.dispose ?? (() => {});
       mount(view, next.el);
     } catch (err) {

@@ -15,11 +15,11 @@ description: Supabase 스키마(테이블, 컬럼, 정책, RPC 함수)를 바꿀
    ```
    CLI가 없으면 `supabase/migrations/<YYYYMMDDHHMMSS>_<이름>.sql`을 직접 생성(타임스탬프는 기존 최대값보다 크게).
 2. **SQL 작성** — 패턴은 `docs/references/supabase-rls.md`.
-   - 새 테이블: `household_id` FK + `alter table … enable row level security` + select/insert/update/delete 정책(`to authenticated`).
+   - 새 테이블: `user_id uuid default auth.uid()` FK + `alter table … enable row level security` + select/insert/update/delete 정책(`to authenticated`).
    - 특권 동작은 `security definer` 함수 + `set search_path = ''` + 내부 `auth.uid()` 검사 + `revoke … from public, anon`.
    - 실시간이 필요하면 `alter publication supabase_realtime add table …`.
 3. **RLS 테스트** — `supabase/tests/database/`에 pgTAP 추가/수정. 최소한:
-   - 같은 가족은 보인다 / 다른 가족은 0행 / 다른 가족 insert는 `42501` / anon은 0행.
+   - 내 것은 보인다 / 남의 것은 0행 / 남의 user_id로 insert는 `42501` / 남의 행 update·delete는 효과 없음 / anon은 0행.
    - `select plan(N)`의 N을 실제 테스트 수와 맞춘다.
 4. **앱 코드** — 접근 함수는 `src/data/*-repo.js`에만(I2). `src/types/index.js` typedef 갱신.
 5. **문서** — `docs/data-model.md`의 테이블·권한 표 갱신.

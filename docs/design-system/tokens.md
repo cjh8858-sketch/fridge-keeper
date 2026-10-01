@@ -30,7 +30,7 @@
 
 ## 타이포·모양
 
-- 글꼴 `--font-sans`, 고정폭 `--font-mono`(초대코드), 크기 `--text-xs … --text-xl`, 굵기 `--weight-regular/bold`, 행간 `--leading`
+- 글꼴 `--font-sans`, 크기 `--text-xs … --text-xl`, 굵기 `--weight-regular/bold`, 행간 `--leading`
 - 모서리 `--radius-sm/md/pill`, 그림자 `--shadow-card`
 - 레이아웃 `--tap-min`(44px), `--content-max`, `--gutter`, `--tabbar-height`, `--panel-width`, 시트 그림자 `--shadow-sheet`
 - 겹침 순서 `--z-sheet` < `--z-tabbar` < `--z-toast`

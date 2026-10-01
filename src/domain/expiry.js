@@ -9,7 +9,7 @@ const URGENCY = { expired: 0, today: 1, soon: 2, fresh: 3 };
 
 /**
  * @param {string} expiryDate YYYY-MM-DD
- * @param {string} todayDate YYYY-MM-DD (가족 시간대 기준 오늘)
+ * @param {string} todayDate YYYY-MM-DD (기기 시간대 기준 오늘)
  * @returns {{ status: import('../types/index.js').ExpiryStatus, daysLeft: number }}
  */
 export function getExpiryStatus(expiryDate, todayDate) {

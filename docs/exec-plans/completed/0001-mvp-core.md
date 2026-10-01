@@ -1,7 +1,7 @@
 # 0001 MVP 핵심 흐름
 
-- 상태: active
-- 관련 스펙: [auth](../../product-specs/auth.md), [family-sharing](../../product-specs/family-sharing.md), [items](../../product-specs/items.md), [expiry-rules](../../product-specs/expiry-rules.md)
+- 상태: completed (M3·가족 공유는 [0002-single-user](../active/0002-single-user.md)로 대체되어 취소)
+- 관련 스펙: [auth](../../product-specs/auth.md), family-sharing(0002에서 삭제), [items](../../product-specs/items.md), [expiry-rules](../../product-specs/expiry-rules.md)
 
 ## 목표
 
@@ -47,3 +47,4 @@
 - 2026-10-02: M6 완료 — `public/sw.js`(셸 캐시, 다른 출처 무시), `data/offline-cache.js`(IndexedDB 스냅샷·가족 목록, 로그아웃 시 삭제), `loadFridge`/`resolveAppState` 캐시 폴백, 냉장고 화면 읽기 전용 모드, PNG 아이콘(`scripts/generate-icons.mjs`)·매니페스트·iOS 메타. 단위 101개. 브라우저: 배포 빌드에서 SW 등록→서버 종료 후 새로고침해도 앱 열림, 스냅샷 저장, 오프라인→읽기 전용→온라인 복귀. 버그 수정: 온라인 복귀 시 "연결 중" 고착(마지막 채널 상태 복원), 정리 후 늦은 CLOSED 콜백 무시.
 - 2026-10-02: 결정 — SW는 Supabase 응답을 캐시하지 않는다(사용자 간 데이터 섞임 방지). 데이터 오프라인은 IndexedDB만.
 - 2026-10-02: M7 배포 — https://cjh8858-sketch.github.io/fridge-keeper/ (로그인 화면·SW 등록·Supabase 설정 포함 확인). CI 첫 실행: check·RLS(pgTAP)·E2E 모두 통과. 겪은 문제(토큰 workflow 권한, 자리표시자 remote, deploy job skipped 버그, Pages Source 미설정)는 github-deploy.md에 기록. DB 자동 마이그레이션은 꺼둠(수동 적용분 repair 필요). **남은 검증: 휴대폰 접속·홈 화면 추가, M3~M5 실제 2계정 확인.**
+- 2026-10-02: 사용자 결정으로 1인용 단순화 → 가족 공유(M3, M5의 가족 간 부분) 취소. 이 계획 종료, 0002로 이어감.

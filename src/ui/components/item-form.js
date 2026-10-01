@@ -5,7 +5,7 @@ import { h } from '../dom.js';
 
 /**
  * @typedef {object} ItemFormProps
- * @property {string} todayDate 빠른 선택 기준일 (가족 시간대)
+ * @property {string} todayDate 빠른 선택 기준일 (기기 시간대)
  * @property {import('../../types/index.js').Item} [item] 있으면 수정 모드
  * @property {(input: import('../../domain/inventory.js').ItemInput) =>
  *   Promise<{ ok: true } | { ok: false, message?: string, errors?: Record<string, string> }>} onSave

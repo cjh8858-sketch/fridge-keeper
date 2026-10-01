@@ -1,6 +1,8 @@
 # 냉장고 지킴이
 
-가족이 함께 쓰는 냉장고 유통기한 알림 웹앱 (휴대폰·PC 실시간 동기화).
+나 혼자 쓰는 냉장고 유통기한 알림 웹앱 (휴대폰·PC 실시간 동기화).
+
+배포: https://cjh8858-sketch.github.io/fridge-keeper/
 
 ```bash
 npm install
