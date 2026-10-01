@@ -1,0 +1,16 @@
+# Supabase CLI 설정 (로컬 DB는 CI/Codespaces에서만 띄운다 — docs/references/github-deploy.md)
+# 생략된 항목은 CLI 기본값을 쓴다.
+project_id = "fridge-keeper"
+
+[db]
+major_version = 17
+
+[db.seed]
+enabled = false
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+
+[auth.email]
+enable_signup = true

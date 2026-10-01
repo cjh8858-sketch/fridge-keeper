@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.local
+.env.*.local
+supabase/.temp/
+supabase/.branches/
+.claude/settings.local.json
+
+# 개인 메모 (비밀값이 있을 수 있음 — 올리지 않음)
+Supabase정보.txt
+*.secret.txt

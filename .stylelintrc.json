@@ -1,0 +1,42 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "[I8] 색상 값은 src/styles/tokens.css 에만 정의합니다. var(--color-*) 또는 var(--status-*) 토큰을 쓰세요. (docs/design-system/tokens.md)"
+      }
+    ],
+    "color-named": [
+      "never",
+      {
+        "message": "[I8] 이름 있는 색(red 등) 금지. 토큰 var(--color-*)를 쓰세요. (docs/design-system/tokens.md)"
+      }
+    ],
+    "function-disallowed-list": [
+      ["rgb", "rgba", "hsl", "hsla", "oklch"],
+      {
+        "message": "[I8] 색 함수는 tokens.css 에서만 씁니다. 토큰 var(--color-*)를 쓰세요. (docs/design-system/tokens.md)"
+      }
+    ],
+    "declaration-property-unit-disallowed-list": [
+      {
+        "/^(margin|padding|gap|row-gap|column-gap|inset)/": ["px", "rem", "em"]
+      },
+      {
+        "message": "[I8] 간격은 var(--space-*) 토큰만 씁니다. (docs/design-system/tokens.md)"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/tokens.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null,
+        "function-disallowed-list": null,
+        "declaration-property-unit-disallowed-list": null
+      }
+    }
+  ]
+}

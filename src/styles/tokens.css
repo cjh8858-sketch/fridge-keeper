@@ -1,0 +1,99 @@
+/*
+ * 디자인 토큰 — 색·간격·타이포의 유일한 원본 (I8).
+ * 다른 CSS 파일은 여기 정의된 var(--*)만 사용한다. 문서: docs/design-system/tokens.md
+ * 토큰 추가/변경은 /build-ui 스킬 절차를 따른다.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* 기본 팔레트 (라이트) */
+  --color-bg: #f7faf8;
+  --color-surface: #fff;
+  --color-surface-muted: #eef3f0;
+  --color-border: #d8e0db;
+  --color-text: #1c2420;
+  --color-text-muted: #5b6862;
+  --color-primary: #2f855a;
+  --color-primary-strong: #276749;
+  --color-on-primary: #fff;
+  --color-focus: #3182ce;
+
+  /* 유통기한 상태 — 반드시 텍스트 라벨과 함께 쓴다 (docs/design-system/accessibility.md) */
+  --status-fresh: #2f855a;
+  --status-fresh-bg: #e6f4ec;
+  --status-soon: #b7791f;
+  --status-soon-bg: #fdf3e1;
+  --status-today: #c05621;
+  --status-today-bg: #fde9dd;
+  --status-expired: #c53030;
+  --status-expired-bg: #fde4e4;
+
+  /* 의미 색 (상태 색을 재사용 — 다크 모드는 상태 색을 따라 자동 전환) */
+  --color-danger: var(--status-expired);
+  --color-success: var(--status-fresh);
+
+  /* 간격 (4px 단위) */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* 타이포 */
+  --font-sans:
+    'Pretendard', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --weight-regular: 400;
+  --weight-bold: 700;
+  --leading: 1.5;
+
+  /* 모양 */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px #0000000f, 0 2px 8px #0000000a;
+
+  /* 레이아웃 */
+  --tap-min: 44px;
+  --content-max: 960px;
+  --gutter: var(--space-4);
+  --tabbar-height: 64px;
+  --panel-width: 360px;
+  --shadow-sheet: 0 -4px 24px #0000002e;
+
+  /* 겹침 순서 */
+  --z-sheet: 20;
+  --z-tabbar: 30;
+  --z-toast: 40;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121715;
+    --color-surface: #1b221f;
+    --color-surface-muted: #232c28;
+    --color-border: #33403a;
+    --color-text: #e7eeea;
+    --color-text-muted: #9aa8a1;
+    --color-primary: #48bb78;
+    --color-primary-strong: #68d391;
+    --color-on-primary: #0d1310;
+    --status-fresh: #68d391;
+    --status-fresh-bg: #1c3327;
+    --status-soon: #f6c35b;
+    --status-soon-bg: #3a2f17;
+    --status-today: #f6a26b;
+    --status-today-bg: #3d2617;
+    --status-expired: #fc8181;
+    --status-expired-bg: #3f1d1d;
+    --shadow-card: 0 1px 2px #0006;
+  }
+}
